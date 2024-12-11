@@ -1,12 +1,20 @@
+import { useState } from 'react';
 import { CreateProduct } from './components/CreateProduct';
 import { ErrorMessage } from './components/errorMessage';
 import { Loader } from './components/loader';
 import { Modal } from './components/modal';
 import { Product } from './components/Product';
 import { useProducts } from './hooks/Products';
+import { IProduct } from './models';
 
 function App() {
-  const { products, loading, error } = useProducts();
+  const { products, loading, error, addProduct } = useProducts();
+  const [modal, setModal] = useState(true)
+
+  const createHandler = (product:IProduct) => {
+    setModal(false)
+    addProduct(product)
+  }
 
   return (
     <>
@@ -16,9 +24,9 @@ function App() {
         {products.map((product) => (
           <Product product={product} key={product.id} />
         ))}
-        <Modal title='Create New Product'>
-          <CreateProduct/>
-        </Modal>
+        {modal && <Modal title='Create New Product' onClose={()=>setModal(false)}>
+          <CreateProduct onCreate={createHandler} />
+        </Modal>}
       </div>
     </>
   );
