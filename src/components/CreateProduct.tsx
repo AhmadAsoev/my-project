@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { IProduct } from '../models';
 import axios from 'axios';
-import { ErrorMessage } from './errorMessage';
+import { ErrorMessage } from './ErrorMessage';
 
 const productData: IProduct = {
   title: '',
